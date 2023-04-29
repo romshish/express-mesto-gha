@@ -35,7 +35,9 @@ const deleteCardById = (req, res) => {
       res.status(STATUS_OK).send({ data: card });
     })
     .catch((err) => {
-      if (err.message === 'not found') {
+      if (err.name === 'ValidationError') {
+        res.status(BAD_REQUEST).send({ message: 'Передан некорректный _id', ...err });
+      } else if (err.message === 'not found') {
         res.status(NOT_FOUND).send({ message: 'Карточка с указанным _id не найдена' });
       } else {
         res.status(INTERNAL_SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });

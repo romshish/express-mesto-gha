@@ -1,7 +1,7 @@
 import express from 'express';
 import http2 from 'node:http2';
-import usersRoutes from './routes/users';
-import cardsRoutes from './routes/cards';
+import usersRoutes from './users';
+import cardsRoutes from './cards';
 
 const NOT_FOUND = http2.constants.HTTP_STATUS_NOT_FOUND;
 

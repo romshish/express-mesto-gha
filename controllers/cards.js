@@ -37,6 +37,8 @@ const deleteCardById = (req, res) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Передан некорректный _id', ...err });
+      } else if (err.name === 'CastError') {
+        res.status(BAD_REQUEST).send({ message: ' Передан несуществующий _id карточки' });
       } else if (err.message === 'not found') {
         res.status(NOT_FOUND).send({ message: 'Карточка с указанным _id не найдена' });
       } else {

@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 
-const { PORT, MONGO_URL } = process.env;
+const { PORT, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
 
 app.use((req, res, next) => {
   req.user = {

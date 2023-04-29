@@ -6,7 +6,7 @@ import {
 const cardsRoutes = express.Router();
 
 cardsRoutes.get('/', getCards);
-cardsRoutes.post('/', express.json(), express.urlencoded({ extended: true }), createCard);
+cardsRoutes.post('/', createCard);
 cardsRoutes.delete('/:cardId', deleteCardById);
 cardsRoutes.put('/:cardId/likes', addLike);
 cardsRoutes.delete('/:cardId/likes', deleteLike);

@@ -7,8 +7,8 @@ const usersRoutes = express.Router();
 
 usersRoutes.get('/', getUsers);
 usersRoutes.get('/:userId', getUserById);
-usersRoutes.post('/', express.json(), express.urlencoded({ extended: true }), createUser);
-usersRoutes.patch('/me', express.json(), express.urlencoded({ extended: true }), updateUserProfile);
-usersRoutes.patch('/me/avatar', express.json(), express.urlencoded({ extended: true }), updateUserAvatar);
+usersRoutes.post('/', createUser);
+usersRoutes.patch('/me', updateUserProfile);
+usersRoutes.patch('/me/avatar', updateUserAvatar);
 
 export default usersRoutes;

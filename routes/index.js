@@ -1,5 +1,6 @@
 import express from 'express';
-import celebrate from 'celebrate';
+import Celebrate from 'celebrate';
+// import Joi from 'joi';
 import auth from '../middlewares/auth';
 import usersRoutes from './users';
 import cardsRoutes from './cards';
@@ -7,7 +8,7 @@ import { createUser, login } from '../controllers/users';
 import NotFoundError from '../errors/not-found-err';
 
 const routes = express.Router();
-const { Joi } = celebrate;
+const { celebrate, Joi } = Celebrate;
 
 routes.post('/signin', celebrate({
   body: Joi.object().keys({

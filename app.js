@@ -1,6 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { errors } from 'celebrate';
 import routes from './routes/index';
 
 dotenv.config();
@@ -13,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
+
+app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;

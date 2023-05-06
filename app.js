@@ -17,23 +17,24 @@ app.use(routes);
 
 app.use(errors());
 
-// app.use((err, req, res, next) => {
-//   const { statusCode = 500, message } = err;
-//   res.status(statusCode).send({
-//     message: statusCode === 500
-//       ? 'На сервере произошла ошибка'
-//       : message,
-//   });
-//   next();
-// });
-
 app.use((err, req, res, next) => {
   console.log(err);
-  const statusCode = err.statusCode || 500;
-  const message = statusCode === 500 ? 'На сервере произошла ошибка' : err.message;
-  res.status(statusCode).send({ message });
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({
+    message: statusCode === 500
+      ? 'На сервере произошла ошибка'
+      : message,
+  });
   next();
 });
+
+// app.use((err, req, res, next) => {
+//   console.log(err);
+//   const statusCode = err.statusCode || 500;
+//   const message = statusCode === 500 ? 'На сервере произошла ошибка' : err.message;
+//   res.status(statusCode).send({ message });
+//   next();
+// });
 
 async function connect() {
   await mongoose.connect(MONGO_URL, {});

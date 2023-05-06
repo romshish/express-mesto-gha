@@ -4,7 +4,7 @@ import auth from '../middlewares/auth';
 import usersRoutes from './users';
 import cardsRoutes from './cards';
 import { createUser, login } from '../controllers/users';
-import NotFoundError from '../errors/not-found-err';
+// import NotFoundError from '../errors/not-found-err';
 
 const routes = express.Router();
 const { celebrate, Joi } = Celebrate;
@@ -27,7 +27,6 @@ routes.post('/signup', celebrate({
 }), createUser);
 
 // routes.use(auth);
-
 routes.use('/users', auth, celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
@@ -44,8 +43,8 @@ routes.use('/cards', auth, celebrate({
   }),
 }), cardsRoutes);
 
-routes.use((req, res, next) => {
-  next(new NotFoundError('Страница по указанному пути не найдена'));
-});
+// routes.use((req, res, next) => {
+//   next(new NotFoundError('Страница по указанному пути не найдена'));
+// });
 
 export default routes;

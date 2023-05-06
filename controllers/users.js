@@ -109,15 +109,17 @@ const login = (req, res, next) => {
         'some-secret-key',
         { expiresIn: '7d' },
       );
-      res.send.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      });
+      res.send({ token });
+
+      // cookie('jwt', token, {
+      //   maxAge: 3600000 * 24 * 7,
+      //   httpOnly: true,
+      //   sameSite: true,
+      // });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new Badrequest('Переданы некорректные данные при обновлении профиля'));
+        next(new Badrequest('Переданы некорректные данные'));
       } else if (err.message === 'not found') {
         next(new NotFoundError('Неправильные почта или пароль'));
       } else {

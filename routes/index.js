@@ -1,6 +1,5 @@
 import express from 'express';
 import Celebrate from 'celebrate';
-// import Joi from 'joi';
 import auth from '../middlewares/auth';
 import usersRoutes from './users';
 import cardsRoutes from './cards';
@@ -13,7 +12,7 @@ const { celebrate, Joi } = Celebrate;
 routes.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(6),
+    password: Joi.string().required().min(4),
   }),
 }), login);
 

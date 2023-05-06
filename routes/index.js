@@ -26,9 +26,9 @@ routes.post('/signup', celebrate({
   }),
 }), createUser);
 
-routes.use(auth);
+// routes.use(auth);
 
-routes.use('/users', celebrate({
+routes.use('/users', auth, celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
@@ -37,13 +37,14 @@ routes.use('/users', celebrate({
     password: Joi.string().required().min(6),
   }),
 }), usersRoutes);
-routes.use('/cards', celebrate({
+routes.use('/cards', auth, celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     link: Joi.string().uri({ scheme: ['http', 'https'] }),
   }),
 }), cardsRoutes);
-routes.use('*', (req, res, next) => {
+
+routes.use((req, res, next) => {
   next(new NotFoundError('Страница по указанному пути не найдена'));
 });
 

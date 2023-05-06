@@ -1,7 +1,7 @@
 import Card from '../models/cards';
-import { NOT_FOUND } from '../utils/config_errors';
 import Badrequest from '../errors/bad-request';
 import NotFoundError from '../errors/not-found-err';
+import Forbidden from '../errors/forbidden-err';
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -28,9 +28,9 @@ const createCard = (req, res, next) => {
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   return Card.findById(cardId)
-    .orFail(() => res.status(NOT_FOUND).send({ message: 'Карточка с указанным _id не найдена' }))
+    .orFail(() => next(new NotFoundError('Карточка с указанным _id не найдена')))
     .then((card) => {
-      if (!card.owner.equals(req.user._id)) throw new Error('not found');
+      if (!card.owner.equals(req.user._id)) throw new Forbidden('Вы не можете удалять чужые карточки');
       return Card.deleteOne(card)
         .then(() => res.send({ data: card }));
     })

@@ -120,8 +120,6 @@ const login = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new Badrequest('Переданы некорректные данные'));
-      } else if (err.message === 'not found') {
-        next(new NotFoundError('Неправильные почта или пароль'));
       } else {
         next(err);
       }

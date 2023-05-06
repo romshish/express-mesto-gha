@@ -1,10 +1,9 @@
 import jsonwebtoken from 'jsonwebtoken';
-import Unauthorized from '../errors/unauthorized';
 
 const jwt = jsonwebtoken;
 
-const handleAuthError = (res, req, next) => {
-  next(new Unauthorized('Ошибка авторизации'));
+const handleAuthError = (res) => {
+  res.status(401).send({ message: 'Ошибка авторизации' });
 };
 
 // eslint-disable-next-line consistent-return
@@ -12,7 +11,7 @@ const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return handleAuthError(res, req, next);
+    return handleAuthError(res);
   }
   const token = authorization.replace('Bearer ', '');
   let payload;
@@ -20,7 +19,7 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, 'some-secret-key');
   } catch (err) {
-    return handleAuthError(res, req, next);
+    return handleAuthError(res);
   }
 
   req.user = payload;

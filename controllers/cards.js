@@ -27,11 +27,9 @@ const createCard = (req, res, next) => {
 
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  console.log(cardId);
   return Card.findById(cardId)
     .orFail(() => res.status(NOT_FOUND).send({ message: 'Карточка с указанным _id не найдена' }))
     .then((card) => {
-      console.log(card.owner, req.user);
       if (!card.owner.equals(req.user._id)) throw new Error('not found');
       return Card.deleteOne(card)
         .then(() => res.send({ data: card }));

@@ -2,8 +2,11 @@ import jsonwebtoken from 'jsonwebtoken';
 
 const jwt = jsonwebtoken;
 
-const handleAuthError = (res) => res.status(401).send({ message: 'Ошибка авторизации' });
+const handleAuthError = (res) => {
+  res.status(401).send({ message: 'Ошибка авторизации' });
+};
 
+// eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
 

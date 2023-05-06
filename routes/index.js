@@ -26,7 +26,6 @@ routes.post('/signup', celebrate({
   }),
 }), createUser);
 
-// routes.use(auth);
 routes.use('/users', auth, usersRoutes);
 routes.use('/cards', auth, cardsRoutes);
 

@@ -28,14 +28,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-// app.use((err, req, res, next) => {
-//   console.log(err);
-//   const statusCode = err.statusCode || 500;
-//   const message = statusCode === 500 ? 'На сервере произошла ошибка' : err.message;
-//   res.status(statusCode).send({ message });
-//   next();
-// });
-
 async function connect() {
   await mongoose.connect(MONGO_URL, {});
   console.log(`Server connect db ${MONGO_URL}`);

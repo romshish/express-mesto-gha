@@ -9,7 +9,11 @@ const { celebrate, Joi } = Celebrate;
 
 usersRoutes.get('/me', getUser);
 usersRoutes.get('/', getUsers);
-usersRoutes.get('/:userId', getUserById);
+usersRoutes.get('/:userId', celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().alphanum().length(24),
+  }),
+}), getUserById);
 usersRoutes.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),

@@ -14,8 +14,20 @@ cardsRoutes.post('/', celebrate({
     link: Joi.string().required().uri({ scheme: ['http', 'https'] }),
   }),
 }), createCard);
-cardsRoutes.delete('/:cardId', deleteCard);
-cardsRoutes.put('/:cardId/likes', addLike);
-cardsRoutes.delete('/:cardId/likes', deleteLike);
+cardsRoutes.delete('/:cardId', celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
+  }),
+}), deleteCard);
+cardsRoutes.put('/:cardId/likes', celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
+  }),
+}), addLike);
+cardsRoutes.delete('/:cardId/likes', celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
+  }),
+}), deleteLike);
 
 export default cardsRoutes;

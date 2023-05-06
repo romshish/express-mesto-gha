@@ -10,8 +10,8 @@ const { celebrate, Joi } = Celebrate;
 cardsRoutes.get('/', getCards);
 cardsRoutes.post('/', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    link: Joi.string().uri({ scheme: ['http', 'https'] }),
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().uri({ scheme: ['http', 'https'] }),
   }),
 }), createCard);
 cardsRoutes.delete('/:cardId', deleteCard);

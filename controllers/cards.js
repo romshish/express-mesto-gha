@@ -26,20 +26,19 @@ const createCard = (req, res, next) => {
 };
 
 const deleteCard = (req, res, next) => {
-  const { cardId } = req.params;
-  return Card.findById(cardId)
+  Card.findById(req.params.cardId)
     .orFail(() => next(new NotFoundError('Карточка с указанным _id не найдена')))
     .populate('owner')
     .then((card) => {
-      if (card.owner._id.toString() !== req.user._id) throw new Forbidden('Вы не можете удалять чужые карточки');
-      return Card.deleteOne(card)
-        .then(() => res.send({ data: card }));
+      if (card.owner._id.toString() === req.user._id) {
+        return Card.deleteOne(card)
+          .then(() => res.send({ data: card, message: 'Карточка успешно удалена' }));
+      }
+      return next(new Forbidden('Нельзя удалить чужую карточку'));
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new Badrequest('Передан некорректный _id'));
-      } else if (err.name === 'CastError') {
-        next(new Badrequest(' Передан несуществующий _id карточки'));
+      if (err.name === 'CastError') {
+        next(new Badrequest('Переданы некорректные данные'));
       } else {
         next(err);
       }

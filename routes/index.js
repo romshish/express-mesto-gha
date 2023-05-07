@@ -29,8 +29,8 @@ routes.post('/signup', celebrate({
 routes.use('/users', auth, usersRoutes);
 routes.use('/cards', auth, cardsRoutes);
 
-// routes.use((req, res, next) => {
-//   next(new NotFoundError('Страница по указанному пути не найдена'));
-// });
+routes.use((req, res, next) => {
+  next(new NotFoundError('Страница по указанному пути не найдена'));
+});
 
 export default routes;
